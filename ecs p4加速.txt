@@ -1,0 +1,17 @@
+显卡p4驱动：
+https://cn.download.nvidia.cn/tesla/474.64/474.64-data-center-tesla-desktop-winserver-2019-2016-international.exe
+
+cuda：11。4。463
+https://developer.download.nvidia.com/compute/cuda/11.4.4/local_installers/cuda_11.4.4_472.50_windows.exe
+
+3。 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+好像是装好了
+import torch
+print(torch.__version__)
+print(torch.cuda.is_available())
+
+输出2.2.1+cu118
+True
+
+

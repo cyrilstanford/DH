@@ -1,0 +1,31 @@
+1。 根本原因：需要从hugging face上下载Bert的多个模型而国内源无法下载所以导致失败但是这个会导致代码在各个地方出现不同的错误值不要管它最后的原因就是模型的下载这个处理好了就行。
+
+处理方法在C盘用户文件夹下有一个bookNLPS的文件夹，在它下面建立三个文件夹：coref_google，entities_google，speaker_google。在这三个文件夹下面放好模型有两个方法如果能直接从having face下载，那么分别进入这三个文件夹，分别在文件夹下的命令行用下载命令（提前装好git）
+git clone https://huggingface.co/google/bert_uncased_L-6_H-768_A-12    对应的是- entities
+git clone https://huggingface.co/google/bert_uncased_L-12_H-768_A-12   对应的是-coref
+git clone https://huggingface.co/google/bert_uncased_L-12_H-768_A-12   对应的是-speaker
+
+然后去运行book nlp的代码很可能还会报错，报错的时候会提示缺什么模型，然后根据模型看它是哪一种在进入对应的这三个文件夹中正确的那一个，再次用git命令下载所缺的模型直到不报错为止。
+
+全部安装好了之后，共有2处文件夹：
+1。 c的用户文件夹bookNLPS下：应该有coref_google，entities_google，speaker_google三个文件夹。
+2。 c的用户文件夹下还要有booknlp_models文件夹：下面有coref_google_bert_uncased_L-2_H-256_A-4-v1.0，coref_google_bert_uncased_L-12_H-768_A-12-v1.0，entities_google_bert_uncased_L-4_H-256_A-4-v1.0，entities_google_bert_uncased_L-6_H-768_A-12-v1.0， speaker_google_bert_uncased_L-8_H-256_A-4-v1.0.1， speaker_google_bert_uncased_L-12_H-768_A-12-v1.0.1  6个文件。
+
+如果不能直接连接hub in face那么就把已经下载的整个打包放到book NLPS文件夹下
+
+下载地址：
+https://www.filemail.com/d/uwshynxcejxqvlm
+https://www.filemail.com/d/kgyuwasipkixlrw
+
+所需要的模型： 
+			if model_params["model"] == "big":
+				entityName="entities_google_bert_uncased_L-6_H-768_A-12-v1.0.model"
+				corefName="coref_google_bert_uncased_L-12_H-768_A-12-v1.0.model"
+				quoteAttribName="speaker_google_bert_uncased_L-12_H-768_A-12-v1.0.1.model"
+			elif model_params["model"] == "small":
+				entityName="entities_google_bert_uncased_L-4_H-256_A-4-v1.0.model"
+				corefName="coref_google_bert_uncased_L-2_H-256_A-4-v1.0.model"
+				quoteAttribName="speaker_google_bert_uncased_L-8_H-256_A-4-v1.0.1.model"
+
+2。 第二个程序运行错误是因为book nlp对应的文件再打开TXT文档的时候缺了utf参数，这一步报错的时候会告诉你具体是哪一个py文件出了问题找到他然后打开修改就可以对我这一次来说出问题的文件是：C:\Users\huihf\anaconda3new\Lib\site-packages\booknlp\english\english_booknlp.py，找到with open(filename, encoding="utf-8") ，把utf加上去（这里已经加好了）
+
